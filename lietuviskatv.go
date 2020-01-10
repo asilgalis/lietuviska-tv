@@ -10,9 +10,7 @@ import (
 	"time"
 )
 
-var (
-	flagPort = flag.String("port", "8989", "port")
-)
+var flagPort = flag.String("port", "8989", "port")
 
 func main() {
 
@@ -31,8 +29,6 @@ func main() {
 			go updateDynamicChannels()
 		}
 	}()
-
-	// Check status of all URLs
 
 	http.HandleFunc("/iptv", renderPlaylist)
 	http.HandleFunc("/iptv/", handleChannelRequest)

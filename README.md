@@ -104,13 +104,17 @@ Programa atlieka kelias funkcijas:
 Šiuo metu esu radęs apie 30+ neapribotų IPTV kanalų, kurių `M3U8` adresas nekinta. Visi tie adresai yra įvesti programos kode (AKA hardcoded) ir jie tiesiog "yra". Likę keli kanalai yra nuolat kintantys, ir juos reikia išgauti programos pagalba.
 
 Galbūt pastebėjote, kad užkrovus `<address>:8989/iptv` visų kanalų nuorodos yra adresuotos į tokį patį adresą, kuriuo yra pasiekiama programa (paminėkim žodį *proxy*). Tai yra dėl keletos priežąsčių:
-1. Programa kas 2 valandas atnaujina dinaminių kanalų nuorodas, tačiau Kodi to nežino, kad IPTV kanalo nuoroda atsinaujino (ir niekada nesužino - tiesiog taip veikia). Kad priversti Kodi sužinoti naują nuorodą, reikia perkrauti arba pareloadinti *Simple IPTV addon*, antraip kanalas po kiek laiko nebus rodomas. Su šio proxinimo pagalba (URL perrašymu), iš Kodi perspektyvos, IPTV kanalo nuoroda yra visada vienoda, o pati programa ją fone nuolat atnaujina.
+1. Programa kas valandą atnaujina dinaminių kanalų nuorodas, tačiau Kodi to nežino, kad IPTV kanalo nuoroda atsinaujino (ir niekada nesužino - tiesiog taip veikia). Kad priversti Kodi sužinoti naują nuorodą, reikia perkrauti arba pareloadinti *Simple IPTV addon*, antraip kanalas po kiek laiko nebus rodomas. Su šio proxinimo pagalba (URL perrašymu), iš Kodi perspektyvos, IPTV kanalo nuoroda yra visada vienoda, o pati programa ją fone nuolat atnaujina.
 2. Kodi nenorėjo normaliai elgtis su pilna TV3 nuoroda - per Kodi net nerodydavo TV3 kanalo, o telefone rodydavo. Su šio proxinimo pagalba (URL perrašymu), šios problemos nebeliko.
 3. Sugeneruota dinaminio kanalo nuoroda būna su tam tikru sesijos ID, kurį sugeneruoja pats IPTV kanalo serveris. Kiekvieną kart, kai IPTV klientas kreipiasi į serverį, yra tikrinama ir prie sesijos ID pririštas public IP (jeigu jis kitoks - kanalas nerodomas ir gaunamas HTTP 403 error). Su šio proxinimo pagalba (URL perrašymu), IPTV kanalo serverio pusės matomas IP adresas visada bus vienodas, todėl dabar šią programą galima talpinti išoriniame serveryje (pvz Google cloud).
 
 ## Kai kurių kanalų nerodo
 
 Kai kurių kanalų tiesiog nerodo. Jeigu pastesbėsi, kad apskritai neberodo daugumos arba nustojo rodyti konkretų kanalą - kelk naują [issue](https://github.com/erkexzcx/lietuviska-tv/issues).
+
+## Port 8989 užimtas kitos programos
+
+Naudok komandininės eilutės argumentą `-port <port>`. Pavyzdžiui ` `.
 
 ## Ant VLC atsilieka garsas
 
@@ -139,7 +143,7 @@ Pakelk naują [issue](https://github.com/erkexzcx/lietuviska-tv/issues) šiam pr
 Jei norite pasileisti ant platformos ar architektūros, kurios nėra pateiktuose binaries - reikia pačiam sukompiliuoti binary. Ant Linux įsirašykite Go ([štai taip](https://www.digitalocean.com/community/tutorials/how-to-install-go-on-debian-9), nes official repos esanti versija dažniausiai būna per sena), atsisiųskite šį projektą ir tada (pavyzdžiui OpenWRT naudojamai `MIPS` `softfloat`):
 ```
 # Binary kompiliavimo komanda:
-env GOOS=linux GOARCH=mips GOMIPS=softfloat go build -ldflags="-s -w" -o "lietuviskatv_linux_mips_softfloat" src/*.go
+env GOOS=linux GOARCH=mips GOMIPS=softfloat go build -ldflags="-s -w" -o "lietuviskatv_linux_mips_softfloat" *.go
 
 # Jei nori daugiau nei per pusę sumažinti binary dydį, tačiau binary gali
 # nepasileisti arba nesusispausti
